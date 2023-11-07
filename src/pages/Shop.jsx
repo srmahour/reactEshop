@@ -16,6 +16,8 @@ export default function Shop(){
     const [loading, error, products] = useFetchQuery(`${config.BaseUrl}/products?offset=${offset}&limit=${limit}&price_min=${price_min}&price_max=${price_max}&categoryId=${categoryID}`);
 
     const getPage = (newlimit, newoffset) => {
+        console.log('Products length', products?.length)
+        console.log('newoffset', newoffset)
         setLimit(newlimit)
         setOffset(newoffset)
     }
@@ -25,7 +27,7 @@ export default function Shop(){
             <div className="mx-auto max-w-7xl px-2 py-10 lg:px-10">
                 <div className="md:flex md:flex-row md:justify-between items-center">
                     <div>
-                        <h1 className="text-xl font-bold">Products {categoryID}</h1>
+                        <h1 className="text-xl font-bold">Products</h1>
                     </div>
                     <div className="mt-6 flex items-center  pt-2 md:mt-0 md:space-x-4  md:pt-0">
                         <Pagination pagefun={getPage}/>

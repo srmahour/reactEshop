@@ -10,6 +10,7 @@ import Banner from "./Banner"
 import CardView from './CardView'
 import Footer from './Footer/Footer'
 import ProductSkeleton from "./ProductSkeleton"
+import LoginModal from "./LoginModal"
+import SignUpModal from "./SignUpModal"
 
-
-export {Header, Logo, Navigation, Button, BurgerIcon, BottomNav, SocialMedia, Image, Banner, CardView, Footer, ProductSkeleton}
+export {Header, Logo, Navigation, Button, BurgerIcon, BottomNav, SocialMedia, Image, Banner, CardView, Footer, ProductSkeleton, LoginModal, SignUpModal}

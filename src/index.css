@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.card-bg {
+    background: linear-gradient(0deg, #27292D, #27292D) padding-box, linear-gradient(129.28deg, #969696 0.61%, #343434 99.27%) border-box;
+}

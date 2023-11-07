@@ -20,7 +20,7 @@ export default function CardView({loading, error, product}){
         }, [1000])
         
     }
-
+    
     if(loading){
         return(
             <ProductSkeleton/>

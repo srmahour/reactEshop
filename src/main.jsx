@@ -8,8 +8,11 @@ import Product from './pages/Product'
 import ErrorPage from './error/ErrorPage'
 import Cart from './pages/Cart'
 import Shop from './pages/Shop'
+import Register from './pages/Register'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
+import ProtectedRoute from './components/ProtectedRoute'
+
 
 
 const router = createBrowserRouter([
@@ -33,13 +36,13 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage/>
       },
       {
-        path:'contact',
-        element: <h1>Contact</h1>,
+        path:'cart',
+        element: <Cart/>,
         errorElement: <ErrorPage/>
       },
       {
-        path:'cart',
-        element: <Cart/>,
+        path:'register',
+        element: <Register/>,
         errorElement: <ErrorPage/>
       }
     ]

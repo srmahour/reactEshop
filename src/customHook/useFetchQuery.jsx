@@ -20,8 +20,6 @@ export default function useFetchQuery(url){
         .catch(error => setError(true))               
     },[url])
 
-  
-
     return [loading, error, products]
 
 }
