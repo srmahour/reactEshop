@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { getCookie, deleteCookie } from "../../utils/cookies";
 import UserChip from "../UserChip";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function Header(){
@@ -45,7 +45,7 @@ export default function Header(){
                         <Navigation/>
                     </div>
                     <div className="hidden space-x-2 lg:flex items-center" >
-                        {token == null ? <Button name="LogIn" modalAction={loginAction}/> : <UserChip username={user} action={logout}/>}
+                        {token == null ? <><Link to={'/register'} className="rounded-md border border-solid border-black bg-transparent px-3 py-2 text-sm font-semibold text-black hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">Signup</Link> <Button name="LogIn" modalAction={loginAction}/></> : <UserChip username={user} action={logout}/>}
                         <CartIcon/>
                     </div>
                     <div className="lg:hidden">

@@ -11,7 +11,9 @@ import Shop from './pages/Shop'
 import Register from './pages/Register'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
+import { StrictMode } from 'react';
 import ProtectedRoute from './components/ProtectedRoute'
+import Checkout from './pages/Checkout'
 
 
 
@@ -44,6 +46,11 @@ const router = createBrowserRouter([
         path:'register',
         element: <Register/>,
         errorElement: <ErrorPage/>
+      },
+      {
+        path:'checkout',
+        element: <ProtectedRoute><Checkout/></ProtectedRoute>,
+        errorElement: <ErrorPage/>
       }
     ]
 
@@ -51,8 +58,10 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-      <Provider store={store}>
-        <RouterProvider router={router}/>
-      </Provider>
+      
+        <Provider store={store}>
+          <RouterProvider router={router}/>
+        </Provider>
+      
   
 )

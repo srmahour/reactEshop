@@ -1,7 +1,6 @@
 import eye from '../assets/eye.png'
 import { useDispatch } from 'react-redux';
 import { showLogin } from '../store/modalSlice';
-import { showSignup } from '../store/modalSlice';
 import { useState } from 'react';
 import ErrorAlert from './ErrorAlert';
 import SuccessAlert from './SuccessAlert';
@@ -85,10 +84,10 @@ export default function LoginModal({preventClose = false, backdrop = true, stati
                         <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} id="loginPassword"  placeholder="Enter your password" className="mt-[10px] block text-primary-200 pl-3 pr-11 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200" />
                     </div>
                     <button type="submit" className={`flex items-center justify-center mb-3 h-[43px] rounded bg-green-600 text-white text-base leading-[19px] w-full text-center cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed`} onClick={loginNow} disabled={username == '' && password == ''}><span className={`animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full mr-2 ${loading ? 'block': 'hidden'}`} role="status" aria-label="loading"></span> Login now</button>
-                    <p className="block text-sm leading-[17px] text-primary-200 font-normal w-full text-zinc-200">Not registered yet? <span className='text-primary-100 cursor-pointer text-green-600' onClick={() => {dispatch(showLogin()), dispatch(showSignup())}}> Register →</span> </p>
+                    <p className="block text-sm leading-[17px] text-primary-200 font-normal w-full text-zinc-200">Not registered yet? <span className='text-primary-100 cursor-pointer text-green-600' onClick={() => {dispatch(showLogin()), navigate('/register')}}> Register →</span> </p>
                 </form>
                 {error ? <ErrorAlert trigger={setError}/> : ''}
-                {success ? <SuccessAlert trigger={setSuccess}/> : ''}
+                {success ? <SuccessAlert text={'Login'} trigger={setSuccess}/> : ''}
                 
             </div>
             <div className={`backdrop-blur-[2px] top-0 h-full w-full z-20 bg-opacity-70 bg-black fixed ${backdrop ? '': 'hidden'} ${show ? 'block': 'hidden'}`}></div>

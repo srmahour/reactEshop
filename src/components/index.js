@@ -12,5 +12,8 @@ import Footer from './Footer/Footer'
 import ProductSkeleton from "./ProductSkeleton"
 import LoginModal from "./LoginModal"
 import SignUpModal from "./SignUpModal"
+import Input from "./Input"
+import SuccessAlert from "./SuccessAlert"
+import ErrorAlert from "./ErrorAlert"
 
-export {Header, Logo, Navigation, Button, BurgerIcon, BottomNav, SocialMedia, Image, Banner, CardView, Footer, ProductSkeleton, LoginModal, SignUpModal}
+export {Header, Logo, Navigation, Button, BurgerIcon, BottomNav, SocialMedia, Image, Banner, CardView, Footer, ProductSkeleton, LoginModal, SignUpModal, Input, SuccessAlert, ErrorAlert}

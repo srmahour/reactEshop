@@ -1,60 +1,104 @@
-import { Button } from "../components";
-import Input from "../components/Input";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import usePostQuery from "../customHook/usePostQuery";
+import {useForm} from 'react-hook-form'
+import {SuccessAlert, Input, ErrorAlert} from '../components/index'
+
 
 export default function Register(){
-    const [firstname, setFirstname] =  useState('');
-    const [lastname, setLastname] =  useState('');
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] =  useState('');
-    const [flatenumber, setFlateNumber] =  useState('');
-    const [city, setCity] = useState('');
-    const [street,setStreet] = useState('');
-    const [zipcode, setZipcode] = useState('');
-    const [phone, setPhone] = useState('');
+    const {register, handleSubmit, reset, formState: { errors }} =  useForm();
+    const [data, setData] = useState(null)
+    const [success, setSuccess] = useState(false);
+    const [loading, error, response] = usePostQuery("https://fakestoreapi.com/users", data);
 
-    const submitFun = (e) => {
-        e.preventDefault()
+    const onSubmit = (data) => {
+        setData(JSON.stringify(data));
+        reset()
+    };
+    
 
-        fetch('https://api.escuelajs.co/api/v1/users',{
-            method:"POST",
-            body:JSON.stringify(
-                {
-                    name: firstname,
-                    email: email,
-                    password: password,
-                    avatar: "https://api.lorem.space/image/face?w=640&h=480&r=867",
-                }
-            )
-        })
-            .then(res=>res.json())
-            .then(json=>console.log(json))
+   useEffect(() => {
+    if(response){
+        setSuccess(true)
+        setTimeout(() =>{
+            setSuccess(false)
+        },1500)
     }
+   }, [response])
 
+
+   console.log('render')
+
+  
 
     return(
-        <div className="container mx-auto lg:max-w-5xl">
+        <div className="container mx-auto lg:max-w-5xl relative">
             <h1 className="text-center text-2xl my-8 font-bold">User Register</h1>
-            <form onSubmit={submitFun}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex gap-5 p-5 bg-zinc-800">
                     <div className="w-1/2">
-                        <Input type="text" required name="firstname" value={firstname} inputAction={setFirstname} label="First Name"/>
-                        <Input type="text" required name="lastname" value={lastname} inputAction={setLastname} label="Last Name"/>
-                        <Input type="text" required name="username" value={username} inputAction={setUsername} label="Username"/>
-                        <Input type="email" required name="email" value={email} inputAction={setEmail} label="Email"/>
-                        <Input type="password" required name="password" value={password} inputAction={setPassword} label="Password"/>
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">First name</label>
+                            <input type="text" {...register("firstname", {required: 'This field is required', minLength:{value:3, message:'Please write a valid first name'}, pattern: { value:/^[A-Za-z]+$/, message:'Please write only alphabet.'}, })} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.firstname?.message}</p>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">Last name</label>
+                            <input type="text" {...register("lastname", {required: 'This field is required', minLength:{value:3, message:'Please write a valid last name'}, pattern: { value:/^[A-Za-z]+$/, message:'Please write only alphabet.'}, })} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.lastname?.message}</p>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">Username</label>
+                            <input type="text" {...register("username", {required: 'This field is required', minLength:{value:6, message:'minimum 6 letters required'}, pattern: { value:/^[a-zA-Z0-9]+$/, message:'No special characters are allowed.'}, })} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.username?.message}</p>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">Email</label>
+                            <input type="email" {...register("email", {required: 'This field is required', pattern: {value:/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g, message:'Write a valid email address'}, })} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.email?.message}</p>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">Password</label>
+                            <input type="password" {...register("password", {required: 'This field is required', minLength:{value:8, message:'Min 8 letters'}})} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.password?.message}</p>
+                        </div>
+                        {loading ? <div className="animate-spin inline-block w-8 h-8 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
+                        <span className="sr-only">Loading...</span>
+                        </div> : ''}
+                        {success ? <SuccessAlert text={'Registered'}/> : ''}
+                        {error ? <ErrorAlert /> : ''}
                     </div>
                     <div className="w-1/2">
-                        <Input type="text" required name="flatenumber" value={flatenumber} inputAction={setFlateNumber} label="Flate/House No"/>
-                        <Input type="text" required name="city" value={city} inputAction={setCity} label="City"/>
-                        <Input type="text" required name="street" value={street} inputAction={setStreet} label="Street"/>
-                        <Input type="text" required name="zipcode" value={zipcode} inputAction={setZipcode} label="Zipcode/Pincode"/>
-                        <Input type="text" required name="phone" value={phone} inputAction={setPhone} label="Phone"/>
-                        <Input type="submit" inputAction={submitFun} />
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">Flate/House Number</label>
+                            <input type="text" {...register("flatnumber", {required: 'This field is required'})} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.flatnumber?.message}</p>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">Street</label>
+                            <input type="text" {...register("street", {required: 'This field is required'})} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.street?.message}</p>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">City</label>
+                            <input type="text" {...register("city", {required: 'This field is required'})} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.city?.message}</p>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">Zipcode</label>
+                            <input type="text" {...register("zipcode", {required: 'This field is required'})} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.zipcode?.message}</p>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">Phone</label>
+                            <input type="tel" {...register("phone", {required: 'This field is required', minLength:{value:10, message:'write a valid phone number'}, pattern: {value:/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g, message: 'Write only numbers'}})} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
+                            <p className="text-xs mt-1 text-red-600">{errors.phone?.message}</p>
+                        </div>
+                        <button type="submit" className="mt-[10px] block text-white cursor-pointer bg-green-600 border-green-600 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none">Submit</button>
                     </div>
                 </div>
+                
             </form>
+            
         </div>
     )
 }
