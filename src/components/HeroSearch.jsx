@@ -8,7 +8,6 @@ export default function HeroSearch({searchFun}){
     const {register, handleSubmit, reset, formState: { errors }} =  useForm();
 
     const submitForm = (data) =>{
-        console.log(data)
         searchFun(data['searchField'])
         reset()
     }

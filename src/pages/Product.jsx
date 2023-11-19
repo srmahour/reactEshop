@@ -14,18 +14,16 @@ export default function Product(){
     const [curr_quantity, setCurr_quantity] = useState(1);
     const [added, setAdded] =  useState(false);
     const dispatch = useDispatch()
-    console.log()
+    
 
     const increase = (e, id) => {
         e.preventDefault()
-        //dispatch(increaseQuant(id))
         setCurr_quantity(curr_quantity + 1)
     }
 
     const decrease = (e, id) => {
         e.preventDefault()
         if(curr_quantity > 1){
-            //dispatch(decreaseQuant(id))
             setCurr_quantity(curr_quantity - 1)
         }
     }
@@ -35,7 +33,7 @@ export default function Product(){
         if(!added){
             dispatch(addProduct({...product}))
             setAdded(true);
-            setCurr_quantity(0)
+            setCurr_quantity(1)
         }
 
         setTimeout(() => {

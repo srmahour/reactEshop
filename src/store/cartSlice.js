@@ -11,7 +11,7 @@ export const cartSlice = createSlice({
         addProduct: (state, action) => {
             const product = action.payload;
             const existingProduct = state.products.find(item => item.id === product.id);
-            console.log(action.payload)
+            
             if (existingProduct) {
               existingProduct.quantity += action.payload.quantity; 
             } else {
@@ -26,9 +26,12 @@ export const cartSlice = createSlice({
         },
         decreaseQuant:(state,action) => {
             state.products = state.products.map((item) => item.id === action.payload ? ({quantity: item.quantity--, ...item}) : ({...item}) )
-        }
+        },
+        clearCart: (state, action) => {
+            state.products = [];
+        },
     }
 })
 
-export const {addProduct, removeProduct, increaseQuant, decreaseQuant} = cartSlice.actions
+export const {addProduct, removeProduct, increaseQuant, decreaseQuant, clearCart, setCart} = cartSlice.actions
 export default cartSlice.reducer
