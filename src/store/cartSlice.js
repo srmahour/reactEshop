@@ -11,11 +11,11 @@ export const cartSlice = createSlice({
         addProduct: (state, action) => {
             const product = action.payload;
             const existingProduct = state.products.find(item => item.id === product.id);
-           
+            console.log(action.payload)
             if (existingProduct) {
-              existingProduct.quantity += 1; 
+              existingProduct.quantity += action.payload.quantity; 
             } else {
-              state.products.push({ ...product, quantity: 1 });
+              state.products.push({ ...product});
             }
         },
         removeProduct:(state, action) => {

@@ -1,28 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useFetchQuery from "../customHook/useFetchQuery";
 import config from '../config/config'
 import Breadcrumbs from "../components/Breadcrumbs";
 import { Image } from "../components";
-import { increaseQuant, decreaseQuant } from "../store/cartSlice"
-import {useDispatch } from "react-redux";
+import {addProduct } from "../store/cartSlice"
+import {useDispatch} from "react-redux";
+
 
 export default function Product(){
     let {productId} = useParams();
-    const [loading,error, products] = useFetchQuery(`${config.BaseUrl}/products/${productId}`);
+    const [loading,error, product] = useFetchQuery(`${config.BaseUrl}/products/${productId}`);
+    const [curr_quantity, setCurr_quantity] = useState(1);
+    const [added, setAdded] =  useState(false);
     const dispatch = useDispatch()
+    console.log()
 
     const increase = (e, id) => {
         e.preventDefault()
-        console.log(id)
-        dispatch(increaseQuant(id))
+        //dispatch(increaseQuant(id))
+        setCurr_quantity(curr_quantity + 1)
     }
 
-    const decrease = (e, id, quantity) => {
+    const decrease = (e, id) => {
         e.preventDefault()
-        if(quantity > 1){
-            dispatch(decreaseQuant(id))
+        if(curr_quantity > 1){
+            //dispatch(decreaseQuant(id))
+            setCurr_quantity(curr_quantity - 1)
         }
+    }
+    const addToCart = (e, product) => {
+        e.preventDefault()
+        
+        if(!added){
+            dispatch(addProduct({...product}))
+            setAdded(true);
+            setCurr_quantity(0)
+        }
+
+        setTimeout(() => {
+            setAdded(false)
+        }, [1000])
+        
     }
     
 
@@ -57,29 +76,29 @@ export default function Product(){
 
    
   
-    if(products !== null){
+    if(product !== null){
         return (
             <div className="mx-auto max-w-7xl px-4 md:px-8 2xl:px-16">
-                <Breadcrumbs title={products.title} />
+                <Breadcrumbs title={product.title} />
                 <div className="block grid-cols-9 items-start gap-x-10 pb-10 pt-7 lg:grid lg:pb-14 xl:gap-x-14 2xl:pb-20">
                     <div className="col-span-5 grid grid-cols-2 gap-2.5">
-                    {products.images.map((item, index) => (
-                        <div key={index+products.price} className="col-span-1 transition duration-150 ease-in hover:opacity-90">
-                            <Image loading={loading} error={error} url={item} alt={products.title} height="h-72"/>
+                    {product.images.map((item, index) => (
+                        <div key={index+product.price} className="col-span-1 transition duration-150 ease-in hover:opacity-90">
+                            <Image loading={loading} error={error} url={item} alt={product.title} height="h-72"/>
                         </div>
                     ))}
                     </div>
                     <div className="col-span-4 pt-8 lg:pt-0">
                         <div className="mb-7 border-b border-gray-300 pb-7">
                             <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl 2xl:text-3xl">
-                            {products.title}
+                            {product.title}
                             </h2>
                             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-                            {products.description}
+                            {product.description}
                             </p>
                             <div className="mt-5 flex items-center ">
                             <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
-                                {new Intl.NumberFormat('en-US',{style: 'currency',currency: 'INR'}).format(products.price)}
+                                {new Intl.NumberFormat('en-US',{style: 'currency',currency: 'INR'}).format(product.price)}
                             </div>
                             </div>
                         </div>
@@ -87,25 +106,27 @@ export default function Product(){
                             <div className="group flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-gray-300 md:h-12">
                             <button
                                 className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-e border-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
-                                onClick={(e) => increase(e, products.id, products.quantity)}
+                                onClick={(e) => increase(e, product.id, product.quantity)}
                             >
                                 +
                             </button>
                             <span className="duration-250 text-heading flex h-full w-12  flex-shrink-0 cursor-default items-center justify-center text-base font-semibold transition-colors ease-in-out  md:w-20 xl:w-24">
-                                1
+                                {curr_quantity}
                             </span>
                             <button 
                             className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-s border-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
-                            onClick={(e) => decrease(e, products.id, products.quantity)}
+                            onClick={(e) => decrease(e, product.id, product.quantity)}
                             >
                                 -
                             </button>
                             </div>
                             <button
-                            type="button"
-                            className="h-11 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                            >
-                            Add to cart
+                                onClick={(e) => addToCart(e,{id:product.id, quantity:curr_quantity, price:product.price, title:product.title, image:product.images[0]})}
+                                type="button"
+                                disabled={added ? true: false}
+                                className={`${added ? 'bg-green-500 hover:bg-green-500 border-green-500 text-white': 'bg-black'} h-11 w-full rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black`}
+                                >
+                                Add to cart
                             </button>
                         </div>
                         <div className="py-6 ">
@@ -116,8 +137,8 @@ export default function Product(){
                                 </li>
                                 <li>
                                     <span className="text-heading inline-block pr-2 font-semibold">Category:</span>
-                                    <Link to={`/category/:${products.category.id}`} className="hover:text-heading transition hover:underline">
-                                        {products.category.name}
+                                    <Link to={`/category/:${product.category.id}`} className="hover:text-heading transition hover:underline">
+                                        {product.category.name}
                                     </Link>
                                 </li>
                             </ul>

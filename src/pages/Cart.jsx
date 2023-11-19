@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux"
 import { removeProduct, increaseQuant, decreaseQuant } from "../store/cartSlice";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+
 
 export default function Cart(){
     const products = useSelector((store) => store.cart.products);
@@ -58,10 +58,10 @@ export default function Cart(){
                                         <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
                                             <div>
                                                 <div className="flex justify-between">
-                                                    <h3 className="text-sm">
-                                                    <a href={`/shop/${id}`} className="font-semibold text-black">
-                                                        {title}
-                                                    </a>
+                                                    <h3 className="text-sm" >
+                                                        <Link to={`/shop/${id}`} className="font-semibold text-black">
+                                                            {title}
+                                                        </Link>
                                                     </h3>
                                                 </div>
                                                 
