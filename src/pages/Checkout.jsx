@@ -1,4 +1,12 @@
+import { useDispatch, useSelector } from "react-redux"
+import { removeProduct } from "../store/cartSlice";
 export default function Checkout(){
+
+    const products =  useSelector((state) => state.cart.products)
+    let total = products.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0);
+    const dispatch =  useDispatch()
+
+
     return(
         <div className="mx-auto my-4 max-w-4xl md:my-6">
             <div className="overflow-hidden  rounded-xl shadow">
@@ -19,7 +27,7 @@ export default function Checkout(){
                                 <div className="mt-4 w-full">
                                 <label
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    for="name"
+                                    
                                 >
                                     Full Name
                                 </label>
@@ -39,7 +47,7 @@ export default function Checkout(){
                                 <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4">
                                 <div className="col-span-3 sm:col-span-4">
                                     <label
-                                    for="cardNum"
+                                    htmlFor="cardNum"
                                     className="block text-sm font-medium text-gray-700"
                                     >
                                     Card number
@@ -55,7 +63,7 @@ export default function Checkout(){
                                 </div>
                                 <div className="col-span-2 sm:col-span-3">
                                     <label
-                                    for="expiration-date"
+                                    htmlFor="expiration-date"
                                     className="block text-sm font-medium text-gray-700"
                                     >
                                     Expiration date (MM/YY)
@@ -72,7 +80,7 @@ export default function Checkout(){
                                 </div>
                                 <div>
                                     <label
-                                    for="cvc"
+                                    htmlFor="cvc"
                                     className="block text-sm font-medium text-gray-700"
                                     >
                                     CVC
@@ -97,7 +105,7 @@ export default function Checkout(){
                                 <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
                                 <div className="sm:col-span-3">
                                     <label
-                                    for="address"
+                                    htmlFor="address"
                                     className="block text-sm font-medium text-gray-700"
                                     >
                                     Address
@@ -114,7 +122,7 @@ export default function Checkout(){
                                 </div>
                                 <div>
                                     <label
-                                    for="city"
+                                    htmlFor="city"
                                     className="block text-sm font-medium text-gray-700"
                                     >
                                     City
@@ -131,7 +139,7 @@ export default function Checkout(){
                                 </div>
                                 <div>
                                     <label
-                                    for="region"
+                                    htmlFor="region"
                                     className="block text-sm font-medium text-gray-700"
                                     >
                                     State / Province
@@ -148,7 +156,7 @@ export default function Checkout(){
                                 </div>
                                 <div>
                                     <label
-                                    for="postal-code"
+                                    htmlFor="postal-code"
                                     className="block text-sm font-medium text-gray-700"
                                     >
                                     Postal code
@@ -176,11 +184,12 @@ export default function Checkout(){
                                     name="same-as-shipping"
                                     type="checkbox"
                                     className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-                                    checked=""
+                                    checked={true}
+                                    readOnly
                                 />
                                 <div className="ml-2">
                                     <label
-                                    for="same-as-shipping"
+                                    htmlFor="same-as-shipping"
                                     className="text-sm font-medium text-gray-900"
                                     >
                                     Same as shipping information
@@ -205,140 +214,53 @@ export default function Checkout(){
                 <div className="bg-gray-100 px-5 py-6 md:px-8">
                     <div className="flow-root">
                     <ul className="-my-7 divide-y divide-gray-200">
-                        <li className="flex items-stretch justify-between space-x-5 py-7">
-                        <div className="flex flex-1 items-stretch">
-                            <div className="flex-shrink-0">
-                            <img
-                                className="h-20 w-20 rounded-lg border border-gray-200 bg-white object-contain"
-                                src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/54a510de-a406-41b2-8d62-7f8c587c9a7e/air-force-1-07-lv8-shoes-9KwrSk.png"
-                                alt="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/54a510de-a406-41b2-8d62-7f8c587c9a7e/air-force-1-07-lv8-shoes-9KwrSk.png"
-                            />
-                            </div>
-                            <div className="ml-5 flex flex-col justify-between">
-                            <div className="flex-1">
-                                <p className="text-sm font-bold">Nike Air Force 1 07 LV8</p>
-                                <p className="mt-1.5 text-sm font-medium text-gray-500">
-                                Orange
-                                </p>
-                            </div>
-                            <p className="mt-4 text-xs font-medium ">x 1</p>
-                            </div>
-                        </div>
-                        <div className="ml-auto flex flex-col items-end justify-between">
-                            <p className="text-right text-sm font-bold text-gray-900">
-                            ₹47,199
-                            </p>
-                            <button
-                            type="button"
-                            className="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                            >
-                            <span className="sr-only">Remove</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                className="h-5 w-5"
-                            >
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                            </button>
-                        </div>
-                        </li>
-                        <li className="flex items-stretch justify-between space-x-5 py-7">
-                        <div className="flex flex-1 items-stretch">
-                            <div className="flex-shrink-0">
-                            <img
-                                className="h-20 w-20 rounded-lg border border-gray-200 bg-white object-contain"
-                                src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/e48d6035-bd8a-4747-9fa1-04ea596bb074/blazer-low-77-se-shoes-0w2HHV.png"
-                                alt="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/e48d6035-bd8a-4747-9fa1-04ea596bb074/blazer-low-77-se-shoes-0w2HHV.png"
-                            />
-                            </div>
-                            <div className="ml-5 flex flex-col justify-between">
-                            <div className="flex-1">
-                                <p className="text-sm font-bold">Nike Blazer Low 77 SE</p>
-                                <p className="mt-1.5 text-sm font-medium text-gray-500">
-                                White
-                                </p>
-                            </div>
-                            <p className="mt-4 text-xs font-medium ">x 1</p>
-                            </div>
-                        </div>
-                        <div className="ml-auto flex flex-col items-end justify-between">
-                            <p className="text-right text-sm font-bold text-gray-900">₹1,549</p>
-                            <button
-                            type="button"
-                            className="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                            >
-                            <span className="sr-only">Remove</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                className="h-5 w-5"
-                            >
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                            </button>
-                        </div>
-                        </li>
-                        <li className="flex items-stretch justify-between space-x-5 py-7">
-                        <div className="flex flex-1 items-stretch">
-                            <div className="flex-shrink-0">
-                            <img
-                                className="h-20 w-20 rounded-lg border border-gray-200 bg-white object-contain"
-                                src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/fd17b420-b388-4c8a-aaaa-e0a98ddf175f/dunk-high-retro-shoe-DdRmMZ.png"
-                                alt="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/fd17b420-b388-4c8a-aaaa-e0a98ddf175f/dunk-high-retro-shoe-DdRmMZ.png"
-                            />
-                            </div>
-                            <div className="ml-5 flex flex-col justify-between">
-                            <div className="flex-1">
-                                <p className="text-sm font-bold">Nike Air Max 90</p>
-                                <p className="mt-1.5 text-sm font-medium text-gray-500">
-                                Black
-                                </p>
-                            </div>
-                            <p className="mt-4 text-xs font-medium ">x 1</p>
-                            </div>
-                        </div>
-                        <div className="ml-auto flex flex-col items-end justify-between">
-                            <p className="text-right text-sm font-bold text-gray-900">₹2219 </p>
-                            <button
-                            type="button"
-                            className="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                            >
-                            <span className="sr-only">Remove</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                className="h-5 w-5"
-                            >
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                            </button>
-                        </div>
-                        </li>
+                        {products && products.map(({title, quantity, price, image, id}) => (
+                            <li className="flex items-stretch justify-between space-x-5 py-7" key={id}>
+                                <div className="flex flex-1 items-stretch">
+                                    <div className="flex-shrink-0">
+                                        <img
+                                            className="h-20 w-20 rounded-lg border border-gray-200 bg-white object-contain"
+                                            src={image}
+                                            alt={image}
+                                        />
+                                    </div>
+                                    <div className="ml-5 flex flex-col justify-between">
+                                        <div className="flex-1">
+                                            <p className="text-sm font-bold">{title}</p>
+                                        </div>
+                                        <p className="mt-4 text-xs font-medium ">x {quantity}</p>
+                                    </div>
+                                </div>
+                                <div className="ml-auto flex flex-col items-end justify-between">
+                                    <p className="text-right text-sm font-bold text-gray-900">
+                                        {new Intl.NumberFormat('en-US',{style: 'currency',currency: 'INR'}).format(price)}
+                                    </p>
+                                    <button
+                                    onClick={() => dispatch(removeProduct(id))}
+                                    type="button"
+                                    className="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                                    >
+                                        <span className="sr-only">Remove</span>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            className="h-5 w-5"
+                                        >
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                        
                     </ul>
                     </div>
                     <hr className="mt-6 border-gray-200" />
@@ -364,7 +286,7 @@ export default function Checkout(){
                     <ul className="mt-6 space-y-3">
                     <li className="flex items-center justify-between text-gray-600">
                         <p className="text-sm font-medium">Sub total</p>
-                        <p className="text-sm font-medium">₹1,14,399</p>
+                        <p className="text-sm font-medium">{new Intl.NumberFormat('en-US',{style: 'currency',currency: 'INR'}).format(total)}</p>
                     </li>
                     <li className="flex items-center justify-between text-gray-900">
                         <p className="text-sm font-medium ">Total</p>

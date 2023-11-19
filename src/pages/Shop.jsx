@@ -16,8 +16,6 @@ export default function Shop(){
     const [loading, error, products] = useFetchQuery(`${config.BaseUrl}/products?offset=${offset}&limit=${limit}&price_min=${price_min}&price_max=${price_max}&categoryId=${categoryID}`);
 
     const getPage = (newlimit, newoffset) => {
-        console.log('Products length', products?.length)
-        console.log('newoffset', newoffset)
         setLimit(newlimit)
         setOffset(newoffset)
     }

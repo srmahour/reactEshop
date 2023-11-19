@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from "react-redux"
 import { removeProduct, increaseQuant, decreaseQuant } from "../store/cartSlice";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Cart(){
     const products = useSelector((store) => store.cart.products);
     let total = products.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0);
     const totalItem = products.reduce((acc, curr) => acc + curr.quantity, 0 )
     const dispatch =  useDispatch();
-    
     
     
     const removeCartItem = (e, productId) => {
@@ -143,17 +143,17 @@ export default function Cart(){
                             <div className="px-2 pb-4 font-medium text-green-700">
                                 You will save {new Intl.NumberFormat('en-US',{style: 'currency',currency: 'INR'}).format(325)} on this order
                             </div>
-                            <hr class="my-8 border-t border-t-gray-200" />
-                            <div class="space-x-4">
+                            <hr className="my-8 border-t border-t-gray-200" />
+                            <div className="space-x-4">
                             <Link
                                to={'/checkout'}
-                                class="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                             >
                                 Checkout
                             </Link>
                             <Link
                                 to={'/shop'}
-                                class="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                             >
                                Continue to Shop
                             </Link>
