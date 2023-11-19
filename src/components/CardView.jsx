@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import {addProduct} from '../store/cartSlice'
 import { useState } from 'react';
 
-export default function CardView({loading, error, product}){
+export default function CardView({pLoading, pError, product}){
     const [added, setAdded] =  useState(false);
     const dispatch = useDispatch()
     const addToCart = (e, product) => {
@@ -21,13 +21,13 @@ export default function CardView({loading, error, product}){
         
     }
     
-    if(loading){
+    if(pLoading){
         return(
             <ProductSkeleton/>
         )
     }
 
-    if(error){
+    if(pError){
         return <h1 className=' text-center p-3 col-span-3'>Something went wrong...</h1>
     }
     

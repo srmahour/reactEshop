@@ -80,15 +80,15 @@ export default function Shop(){
                         <div className="pt-6">
                             <h3 className="text-lg font-semibold text-gray-900">Price</h3>
                             <div className="flex items-center mt-2">
-                                <input type="number" min={0} value={price_min} onChange={(e) => setPrice_min(e.target.value)} step="50"  className="w-28 h-10 border border-solid text-center border-gray-200"/>
+                                <input type="number" min={10} value={price_min} onChange={(e) => setPrice_min(e.target.value)} step="50"  className="w-28 h-10 border border-solid text-center border-gray-200"/>
                                 <span className="h-10 w-8 flex items-center justify-center">-</span>
-                                <input type="number" max={1000} value={price_max} onChange={(e) => setPrice_max(e.target.value)} step="50" className="w-28 h-10 border border-solid text-center border-gray-200"/>
+                                <input type="number" min={100} max={1000} value={price_max} onChange={(e) => setPrice_max(e.target.value)} step="50" className="w-28 h-10 border border-solid text-center border-gray-200"/>
                             </div>
                         </div>
                     </div>
                     <div className=" w-full rounded-lg border-2 grid gap-3 grid-cols-3 border-dashed p-3 lg:col-span-9 lg:h-full">
                         {products && products.map((product) => (
-                            <CardView product={product} loading={loading} error={error} key={(Math.random(6) * 1000)}/>
+                            <CardView product={product} pLoading={loading} pError={error} key={(Math.random(6) * 1000)}/>
                         ))}
                     </div>
                     

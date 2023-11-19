@@ -10,7 +10,9 @@ export default function Home(){
    
     const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(10);
-    const [loading, error, products] = useFetchQuery(`${config.BaseUrl}/products?offset=${offset}&limit=${limit}`);
+    const [title, setTitle] =  useState('')
+    const [loading, error, products] = useFetchQuery(`${config.BaseUrl}/products?offset=${offset}&limit=${limit}&title=${title}`);
+    
     const getPage = (newlimit, newoffset) => {
         setLimit(newlimit)
         setOffset(newoffset)
@@ -19,12 +21,13 @@ export default function Home(){
 
     return(
         <>
-            <HeroSearch/>
+            <HeroSearch searchFun={setTitle} />
             <section className="container mx-auto">
                 <div className="flex flex-wrap gap-3 justify-center">
                     {products && products.map((product) => (
-                        <CardView product={product} loading={loading} error={error} key={(Math.random(6) * 1000)}/>
+                        <CardView product={product} pLoading={loading} pError={error} key={(Math.random(6) * 1000)}/>
                     ))}
+                    {}
                      <Pagination pagefun={getPage}/>
                 </div>
             </section>
