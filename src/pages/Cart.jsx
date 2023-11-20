@@ -29,8 +29,8 @@ export default function Cart(){
 
 
     // payment integration
-    const makePayment = async()=>{
-        const stripe = await loadStripe("ENTER YOUR PUBLISHABLE KEY");
+    const makePayment = async () => {
+        const stripe = await loadStripe('pk_test_he3szAcpmjYIRBwyGAT0ZeUP006YK59MuS');
 
         const body = {
             products:products
@@ -38,7 +38,7 @@ export default function Cart(){
         const headers = {
             "Content-Type":"application/json"
         }
-        const response = await fetch("http://localhost:7000/api/create-checkout-session",{
+        const response = await fetch("http://localhost:1992/api/create-checkout-session", {
             method:"POST",
             headers:headers,
             body:JSON.stringify(body)
@@ -172,12 +172,17 @@ export default function Cart(){
                             
                             
                             <div className="space-x-4">
-                            <Link
+                            {/*<Link
                                to={'/checkout'}
                                 className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                             >
                                 Checkout
-                            </Link>
+                                                    </Link>*/}
+                            <button type="button" onClick={makePayment}
+                                className="rounded-md bg-teal-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                            >
+                                Checkout
+                            </button>
                             <Link
                                 to={'/shop'}
                                 className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
