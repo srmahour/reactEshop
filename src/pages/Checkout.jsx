@@ -6,6 +6,32 @@ export default function Checkout(){
     let total = products.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0);
     const dispatch =  useDispatch()
 
+    // payment integration
+    const makePayment = async()=>{
+        const stripe = await loadStripe("ENTER YOUR PUBLISHABLE KEY");
+
+        const body = {
+            products:carts
+        }
+        const headers = {
+            "Content-Type":"application/json"
+        }
+        const response = await fetch("http://localhost:7000/api/create-checkout-session",{
+            method:"POST",
+            headers:headers,
+            body:JSON.stringify(body)
+        });
+
+        const session = await response.json();
+
+        const result = stripe.redirectToCheckout({
+            sessionId:session.id
+        });
+        
+        if(result.error){
+            console.log(result.error);
+        }
+    }
 
     return(
         <div className="mx-auto my-4 max-w-4xl md:my-6">

@@ -14,6 +14,8 @@ import { store } from './store/store'
 import { StrictMode } from 'react';
 import ProtectedRoute from './components/ProtectedRoute'
 import Checkout from './pages/Checkout'
+import Success from './pages/Success'
+import Cancel from './pages/Cancel'
 
 
 
@@ -49,7 +51,17 @@ const router = createBrowserRouter([
       },
       {
         path:'checkout',
-        element: <ProtectedRoute><Checkout/></ProtectedRoute>,
+        element: <Checkout/>,
+        errorElement: <ErrorPage/>
+      },
+      {
+        path:'success',
+        element: <Success/>,
+        errorElement: <ErrorPage/>
+      },
+      {
+        path:'cancel',
+        element: <Cancel/>,
         errorElement: <ErrorPage/>
       }
     ]
