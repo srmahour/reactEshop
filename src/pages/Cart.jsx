@@ -29,7 +29,7 @@ export default function Cart(){
         }
     }
 
-
+    
     // payment integration
     const makePayment = async () => {
         const stripe = await loadStripe(config.PublishKey);
@@ -69,8 +69,6 @@ export default function Cart(){
                         <h2 id="cart-heading" className="sr-only">
                             Items in your shopping cart
                         </h2>
-                        {console.log(products.length)}
-                        {console.log(products.length > 0)}
 
                         {(products.length > 0) ? (
                             <ul role="list" className="divide-y divide-gray-200">
