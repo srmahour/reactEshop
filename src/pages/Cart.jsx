@@ -3,6 +3,7 @@ import { removeProduct, increaseQuant, decreaseQuant } from "../store/cartSlice"
 import { Link } from "react-router-dom";
 import {loadStripe} from '@stripe/stripe-js';
 import empty_cart from '../assets/empty_cart.svg'
+import config from '../config/config'
 
 export default function Cart(){
     const products = useSelector((store) => store.cart.products);
@@ -31,7 +32,7 @@ export default function Cart(){
 
     // payment integration
     const makePayment = async () => {
-        const stripe = await loadStripe('pk_test_he3szAcpmjYIRBwyGAT0ZeUP006YK59MuS');
+        const stripe = await loadStripe(config.PublishKey);
 
         const body = {
             products:products
