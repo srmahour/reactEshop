@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { removeProduct, increaseQuant, decreaseQuant } from "../store/cartSlice";
 import { Link } from "react-router-dom";
 import {loadStripe} from '@stripe/stripe-js';
+import empty_cart from '../assets/empty_cart.svg'
 
 export default function Cart(){
     const products = useSelector((store) => store.cart.products);
@@ -50,6 +51,8 @@ export default function Cart(){
             sessionId:session.id
         });
         
+        console.log(result)
+        
         if(result.error){
             console.log(result.error);
         }
@@ -59,15 +62,17 @@ export default function Cart(){
     return(
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
             <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                    Shopping Cart
-                </h1>
+               
                 <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
                     <section aria-labelledby="cart-heading" className="rounded-lg bg-white lg:col-span-8">
                         <h2 id="cart-heading" className="sr-only">
                             Items in your shopping cart
                         </h2>
-                        <ul role="list" className="divide-y divide-gray-200">
+                        {console.log(products.length)}
+                        {console.log(products.length > 0)}
+
+                        {(products.length > 0) ? (
+                            <ul role="list" className="divide-y divide-gray-200">
                             {products && products.map(({id,image,price,quantity,title}) => (
                                 <div key={id}>
                                     <li className="flex py-6 sm:py-6 ">
@@ -130,6 +135,14 @@ export default function Cart(){
                             ))}
                             
                         </ul>
+                        ) : (
+                            <>  <h4 className="text-3xl">Cart is empty</h4>
+                                <img src={empty_cart} alt="empty cart" height={500} width={500} className="max-w-full" />
+                            </>
+                        )}
+
+
+                        
                     </section>
                     {/* Order summary */}
                     <section

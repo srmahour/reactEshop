@@ -1,7 +1,23 @@
-import { Link } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { clearCart } from "../store/cartSlice";
+import { useDispatch } from "react-redux";
 
 export default function Success(){
+    const [newSessionId, setNewSessionId] = useState('')
+    const [searchParams] = useSearchParams();
+    const session_id = searchParams.get("session_id");
+    
+    const dispatch =  useDispatch()
+    
+    useEffect(() => {
+        setNewSessionId(session_id)
+    })
+    useEffect(() =>{
+        dispatch(clearCart())
+    },[newSessionId])
+
+
     return(
         <div className="text-center py-20 px-4 sm:px-6 lg:px-8">
             <div className="bg-teal-50 border-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30 m-auto w-72" role="alert">

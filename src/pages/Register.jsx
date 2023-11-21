@@ -26,16 +26,12 @@ export default function Register(){
    }, [response])
 
 
-   console.log('render')
-
-  
-
     return(
-        <div className="container mx-auto lg:max-w-5xl relative">
+        <div className="container mx-auto lg:max-w-5xl relative px-3">
             <h1 className="text-center text-2xl my-8 font-bold">User Register</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex gap-5 p-5 bg-zinc-800">
-                    <div className="w-1/2">
+                <div className="block sm:flex gap-5 p-5 bg-zinc-800">
+                    <div className="sm:w-1/2">
                         <div className="mb-4">
                             <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">First name</label>
                             <input type="text" {...register("firstname", {required: 'This field is required', minLength:{value:3, message:'Please write a valid first name'}, pattern: { value:/^[A-Za-z]+$/, message:'Please write only alphabet.'}, })} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
@@ -67,7 +63,7 @@ export default function Register(){
                         {success ? <SuccessAlert text={'Registered'}/> : ''}
                         {error ? <ErrorAlert /> : ''}
                     </div>
-                    <div className="w-1/2">
+                    <div className="sm:w-1/2">
                         <div className="mb-4">
                             <label className="block text-sm leading-[17px] text-primary-100 font-normal w-full text-zinc-200">Flate/House Number</label>
                             <input type="text" {...register("flatnumber", {required: 'This field is required'})} className="mt-[10px] block text-primary-200 px-3 text-base leading-[19px] w-full rounded border-primary-400 border-solid border-[1.5px] h-[43px] font-normal bg-primary-500 placeholder:text-primary-200 focus-visible:shadow-none"/>
